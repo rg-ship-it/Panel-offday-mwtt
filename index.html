@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="id">
 <head>
@@ -2603,15 +2604,15 @@
       let cachedLoginPassword = null; // tidak disimpan permanen, hanya untuk verifikasi sementara
       let appInitialized = false;
 
-      // Fungsi untuk mengambil password login dari Firebase, jika tidak ada maka buat default "mawar7878"
+      // Fungsi untuk mengambil password login dari Firebase, jika tidak ada maka buat default "coba aja kalau bisa"
       async function getLoginPasswordFromFirebase() {
         try {
           const snapshot = await accessPasswordRef.once("value");
           let currentPw = snapshot.val();
           if (!currentPw) {
             // default password pertama kali
-            await accessPasswordRef.set("mawar7878");
-            currentPw = "mawar7878";
+            await accessPasswordRef.set("coba aja kalau bisa");
+            currentPw = "coba aja kalau bisa";
           }
           return currentPw;
         } catch(e) {
