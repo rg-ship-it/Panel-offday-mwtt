@@ -2608,6 +2608,7 @@
       // Fungsi untuk mengambil password login dari Firebase, jika tidak ada maka buat default "coba aja kalau bisa"
       async function getLoginPasswordFromFirebase() {
         try {
+          const snapshot = await accessPasswordRef.once("value");
           let currentPw = snapshot.val();
           if (!currentPw) {
             // default password pertama kali
