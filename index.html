@@ -1,6 +1,7 @@
 
 
 
+
 <!doctype html>
 <html lang="id">
 <head>
@@ -2198,10 +2199,10 @@
         <button id="next">Bulan depan →</button>
         <button id="bulkImport" class="btn-accent">📥 Import Excel</button>
         <button id="lockBtn" class="btn-amber">🔒 TERKUNCI</button>
-        <button id="undoBtn" disabled></button>
-        <button id="redoBtn" disabled></button>
+        <button id="undoBtn" disabled>🌹</button>
+        <button id="redoBtn" disabled>🌹</button>
         <!-- Tombol ganti password login (muncul saat unlock) -->
-        <button id="changeLoginPwBtn" style="display:none;"></button>
+        <button id="changeLoginPwBtn" style="display:none;">🔑 Ganti Password Login</button>
       </div>
     </div>
 
@@ -2606,15 +2607,15 @@
       let cachedLoginPassword = null; // tidak disimpan permanen, hanya untuk verifikasi sementara
       let appInitialized = false;
 
-      // Fungsi untuk mengambil password login dari Firebase, jika tidak ada maka buat default "coba aja kalau bisa"
+      // Fungsi untuk mengambil password login dari Firebase, jika tidak ada maka buat default "jangan gratil tangan"
       async function getLoginPasswordFromFirebase() {
         try {
           const snapshot = await accessPasswordRef.once("value");
           let currentPw = snapshot.val();
           if (!currentPw) {
             // default password pertama kali
-            await accessPasswordRef.set("coba aja kalau bisa");
-            currentPw = "coba aja kalau bisa";
+            await accessPasswordRef.set("jangan gratil tangan");
+            currentPw = "jangan gratil tangan";
           }
           return currentPw;
         } catch(e) {
