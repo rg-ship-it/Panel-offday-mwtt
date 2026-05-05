@@ -1,3 +1,5 @@
+
+
 <!doctype html>
 <html lang="id">
 <head>
@@ -2119,6 +2121,26 @@
       }
     }
 
+
+    /* ===== REVISI JARVIS: EXCEL DIVISI TANPA TANGGAL, BOX MENYATU ===== */
+    .excel-date-container,
+    .excel-date-input{
+      display:none !important;
+    }
+    .excel-input-group{
+      min-height:96px !important;
+      gap:0 !important;
+      justify-content:stretch !important;
+    }
+    .excel-nama-input{
+      flex:1 1 25% !important;
+      min-height:24px !important;
+      border-bottom:1px solid rgba(255,255,255,.12) !important;
+    }
+    .excel-nama-input:last-child{
+      border-bottom:none !important;
+    }
+
     .starfield {
       position: fixed;
       top: 0;
@@ -2940,10 +2962,8 @@
       
       <div style="margin:15px; padding:10px; background:rgba(90,0,0,0.3); border-radius:12px; border:1px solid rgba(255,215,0,0.3);">
         <div style="color:#FFD700; font-weight:900; font-size:12px; margin-bottom:10px;">
-          Struktur: 31 Baris x 6 Kolom | Setiap sel: 4 Nama + 1 Tanggal
         </div>
         <div style="color:#FFD700; font-weight:900; font-size:12px;">
-          Kolom: LIVE CHAT, WHATSAPP, DEPOSIT, FINANCE, WHITDRAW, DESIGN
         </div>
       </div>
       
@@ -4807,11 +4827,6 @@
                                    value="${data.nama3.replace(/"/g, '&quot;')}" placeholder="Nama 3">
                             <input type="text" class="excel-nama-input" data-row="${row}" data-col="${col}" data-type="nama4" 
                                    value="${data.nama4.replace(/"/g, '&quot;')}" placeholder="Nama 4">
-                            
-                            <div class="excel-date-container">
-                                <input type="date" class="excel-date-input" data-row="${row}" data-col="${col}" data-type="tanggal" 
-                                       value="${data.tanggal}">
-                            </div>
                         </div>
                     </td>
                 `;
@@ -4826,30 +4841,6 @@
         
         container.querySelectorAll(".excel-nama-input").forEach(input => {
             input.addEventListener("input", (e) => {
-                const row = parseInt(e.target.dataset.row);
-                const col = parseInt(e.target.dataset.col);
-                const type = e.target.dataset.type;
-                
-                if (!barisKolomExcelData[row]) barisKolomExcelData[row] = [];
-                if (!barisKolomExcelData[row][col]) {
-                    barisKolomExcelData[row][col] = { 
-                        nama1: "", 
-                        nama2: "", 
-                        nama3: "", 
-                        nama4: "", 
-                        tanggal: "" 
-                    };
-                }
-                
-                barisKolomExcelData[row][col][type] = e.target.value;
-                
-                saveBarisKolomExcel();
-                schedulePush();
-            });
-        });
-        
-        container.querySelectorAll(".excel-date-input").forEach(input => {
-            input.addEventListener("change", (e) => {
                 const row = parseInt(e.target.dataset.row);
                 const col = parseInt(e.target.dataset.col);
                 const type = e.target.dataset.type;
@@ -5145,7 +5136,7 @@
         };
         
         $("#exportExcelAllBtn").onclick = async () => {
-          let allData = "DAFTAR NAMA DAN TANGGAL PER KOLOM (31 Baris):\n\n";
+          let allData = "DAFTAR NAMA PER KOLOM (31 Baris):\n\n";
           const kolomNames = ["LIVE CHAT", "WHATSAPP", "DEPOSIT", "FINANCE", "WHITDRAW", "DESIGN"];
           
           for (let col = 0; col < 6; col++) {
@@ -5167,12 +5158,8 @@
                 cell.nama4?.trim()
               ].filter(n => n && n !== "");
               
-              const dateStr = cell.tanggal?.trim() || "";
-              
-              if (names.length > 0 || dateStr) {
-                const nameStr = names.length > 0 ? names.join(", ") : "-";
-                const rowStr = dateStr ? `${nameStr} | ${dateStr}` : nameStr;
-                kolomData.push(`${row+1}. ${rowStr}`);
+              if (names.length > 0) {
+                kolomData.push(`${row+1}. ${names.join(", ")}`);
               }
             }
             
@@ -5183,7 +5170,7 @@
           
           try {
             await navigator.clipboard.writeText(allData);
-            toast("Semua data Excel dicopy (31 baris, 4 nama, 1 tanggal)");
+            toast("Semua data Excel dicopy (31 baris, 4 nama)");
           } catch(e) {
             prompt("Copy manual (Ctrl+C):", allData);
             toast("Gagal auto copy, copy manual");
