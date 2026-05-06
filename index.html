@@ -1,5 +1,3 @@
-
-
 <!doctype html>
 <html lang="id">
 <head>
@@ -6965,6 +6963,128 @@ body {
 }
 </style>
 
+
+
+<style id="revisi-jarvis-cuti-lampu-luar-saja-fix">
+/* ===== REVISI JARVIS FIX: CUTI - LAMPU BERJALAN HANYA DI GARIS LUAR ===== */
+@property --cutiOuterAngleFix {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+/* Bungkus tabel CUTI dibuat bersih. Tidak ada sorot/lampu di dalam tabel. */
+#cutiPanel .cuti-table-wrap{
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: auto !important;
+  padding: 6px !important;
+  border-radius: 18px !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+  background: rgba(0,0,0,.42) !important;
+  box-shadow:
+    0 0 10px rgba(0,0,0,.55),
+    inset 0 0 0 1px rgba(255,255,255,.045) !important;
+  animation: none !important;
+}
+
+/* Matikan total semua lampu/shine yang masuk ke area dalam kolom CUTI. */
+#cutiPanel .cuti-table-wrap::before,
+#cutiPanel .cuti-table tbody tr::before,
+#cutiPanel .cuti-table tbody tr::after,
+#cutiPanel .cuti-table tbody td::before,
+#cutiPanel .cuti-table tbody td::after,
+#cutiPanel .cuti-table thead th::before,
+#cutiPanel .cuti-table thead th::after{
+  content: none !important;
+  display: none !important;
+  animation: none !important;
+  background: none !important;
+  opacity: 0 !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+/* Lampu berjalan hanya di garis luar wrapper CUTI, pakai mask agar tengahnya kosong/bersih. */
+#cutiPanel .cuti-table-wrap::after{
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: 18px !important;
+  padding: 3px !important;
+  pointer-events: none !important;
+  z-index: 5 !important;
+  background: conic-gradient(
+    from var(--cutiOuterAngleFix),
+    transparent 0deg,
+    transparent 28deg,
+    #21030a 40deg,
+    #7f1020 54deg,
+    #dc2626 68deg,
+    #ffd6d6 78deg,
+    #1d4ed8 90deg,
+    #0f1f46 104deg,
+    transparent 122deg,
+    transparent 188deg,
+    #0c1838 204deg,
+    #1e3a8a 220deg,
+    #3b82f6 236deg,
+    #dbeafe 246deg,
+    #b91c1c 260deg,
+    #380712 276deg,
+    transparent 294deg,
+    transparent 360deg
+  ) !important;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0) !important;
+  -webkit-mask-composite: xor !important;
+  mask-composite: exclude !important;
+  filter:
+    drop-shadow(0 0 5px rgba(220,38,38,.72))
+    drop-shadow(0 0 8px rgba(37,99,235,.55)) !important;
+  animation: cutiLampuLuarSajaFix 10s linear infinite !important;
+}
+
+/* Tabel dan teks selalu di atas background gelap, tapi di bawah garis lampu luar. */
+#cutiPanel table.cuti-table{
+  position: relative !important;
+  z-index: 2 !important;
+  overflow: hidden !important;
+  border-radius: 12px !important;
+  background: rgba(0,0,0,.36) !important;
+  box-shadow: none !important;
+}
+
+#cutiPanel .cuti-table thead th{
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+#cutiPanel .cuti-table tbody tr,
+#cutiPanel .cuti-table tbody td{
+  position: relative !important;
+  z-index: 3 !important;
+  background: rgba(0,0,0,.22) !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+#cutiPanel .cuti-table tbody tr:hover td{
+  background: rgba(255,255,255,.055) !important;
+}
+
+@keyframes cutiLampuLuarSajaFix{
+  to { --cutiOuterAngleFix: 360deg; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  #cutiPanel .cuti-table-wrap::after{
+    animation: none !important;
+  }
+}
+</style>
+
 </body>
 </html>
 
@@ -7261,5 +7381,335 @@ body {
   #cutiPanel .cuti-table-wrap{
     animation: none !important;
   }
+}
+</style>
+
+<style id="jarvis-final-fix-cuti-no-inner-light">
+/* ===== FINAL FIX JARVIS: CUTI TANPA LAMPU DI DALAM, LAMPU HANYA GARIS LUAR ===== */
+@property --cutiFinalOuterAngle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+#cutiPanel .cuti-table-wrap{
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: auto !important;
+  padding: 7px !important;
+  border-radius: 18px !important;
+  border: 1px solid rgba(255,255,255,.14) !important;
+  background: rgba(10, 10, 12, .88) !important;
+  background-image: none !important;
+  animation: none !important;
+  box-shadow:
+    0 0 12px rgba(0,0,0,.70),
+    inset 0 0 0 1px rgba(255,255,255,.045) !important;
+}
+
+#cutiPanel .cuti-table-wrap::before,
+#cutiPanel .cuti-table tbody tr::before,
+#cutiPanel .cuti-table tbody tr::after,
+#cutiPanel .cuti-table tbody td::before,
+#cutiPanel .cuti-table tbody td::after,
+#cutiPanel .cuti-table thead th::before,
+#cutiPanel .cuti-table thead th::after{
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  background-image: none !important;
+  animation: none !important;
+  opacity: 0 !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+#cutiPanel .cuti-table-wrap::after{
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: 18px !important;
+  padding: 3px !important;
+  pointer-events: none !important;
+  z-index: 30 !important;
+  background: conic-gradient(
+    from var(--cutiFinalOuterAngle),
+    transparent 0deg,
+    transparent 28deg,
+    #24040a 38deg,
+    #7f1020 52deg,
+    #dc2626 66deg,
+    #ffd6d6 76deg,
+    #1d4ed8 90deg,
+    #0f1f46 106deg,
+    transparent 122deg,
+    transparent 190deg,
+    #08142d 205deg,
+    #1e3a8a 220deg,
+    #3b82f6 236deg,
+    #dbeafe 246deg,
+    #b91c1c 260deg,
+    #380712 276deg,
+    transparent 294deg,
+    transparent 360deg
+  ) !important;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0) !important;
+  -webkit-mask-composite: xor !important;
+  mask-composite: exclude !important;
+  filter:
+    drop-shadow(0 0 5px rgba(220,38,38,.70))
+    drop-shadow(0 0 8px rgba(37,99,235,.48)) !important;
+  animation: cutiFinalLampuLuar 12s linear infinite !important;
+}
+
+#cutiPanel table.cuti-table{
+  position: relative !important;
+  z-index: 2 !important;
+  background: rgba(8, 8, 10, .72) !important;
+  background-image: none !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  box-shadow: none !important;
+}
+
+#cutiPanel .cuti-table tbody tr,
+#cutiPanel .cuti-table tbody td{
+  position: relative !important;
+  z-index: 3 !important;
+  background: rgba(12, 12, 14, .68) !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+#cutiPanel .cuti-table tbody tr:hover td{
+  background: rgba(40, 40, 44, .72) !important;
+  background-image: none !important;
+}
+
+@keyframes cutiFinalLampuLuar{
+  to { --cutiFinalOuterAngle: 360deg; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  #cutiPanel .cuti-table-wrap::after{ animation: none !important; }
+}
+</style>
+
+<style id="jarvis-final-aktifkan-lampu-luar-cuti">
+/* ===== FINAL JARVIS: AKTIFKAN LAMPU BERJALAN DI GARIS LUAR CUTI SAJA ===== */
+@property --cutiOuterRunActive {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+/* Matikan semua lampu/pantulan di bagian dalam kolom CUTI */
+#cutiPanel .cuti-table-wrap::before,
+#cutiPanel .cuti-table-wrap::after,
+#cutiPanel .cuti-table::before,
+#cutiPanel .cuti-table::after,
+#cutiPanel .cuti-table thead::before,
+#cutiPanel .cuti-table thead::after,
+#cutiPanel .cuti-table tbody::before,
+#cutiPanel .cuti-table tbody::after,
+#cutiPanel .cuti-table tr::before,
+#cutiPanel .cuti-table tr::after,
+#cutiPanel .cuti-table th::before,
+#cutiPanel .cuti-table th::after,
+#cutiPanel .cuti-table td::before,
+#cutiPanel .cuti-table td::after{
+  content: none !important;
+  display: none !important;
+  opacity: 0 !important;
+  background: none !important;
+  background-image: none !important;
+  animation: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+/* Lampu berjalan dibuat langsung sebagai BORDER luar, jadi tidak masuk ke area tabel. */
+#cutiPanel .cuti-table-wrap{
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: auto !important;
+  border: 5px solid transparent !important;
+  border-radius: 20px !important;
+  padding: 6px !important;
+  background:
+    linear-gradient(rgba(8,8,10,.96), rgba(8,8,10,.96)) padding-box,
+    conic-gradient(
+      from var(--cutiOuterRunActive),
+      #1b1b1f 0deg,
+      #1b1b1f 22deg,
+      #0f172a 36deg,
+      #1e40af 52deg,
+      #38bdf8 66deg,
+      #dbeafe 76deg,
+      #7f1020 88deg,
+      #dc2626 104deg,
+      #ffd1d1 116deg,
+      #1b1b1f 132deg,
+      #1b1b1f 198deg,
+      #390814 216deg,
+      #b91c1c 232deg,
+      #ffb4b4 246deg,
+      #2563eb 262deg,
+      #60a5fa 278deg,
+      #0b1638 296deg,
+      #1b1b1f 318deg,
+      #1b1b1f 360deg
+    ) border-box !important;
+  box-shadow:
+    0 0 10px rgba(220,38,38,.50),
+    0 0 15px rgba(37,99,235,.42),
+    0 0 24px rgba(0,0,0,.65),
+    inset 0 0 0 1px rgba(255,255,255,.05) !important;
+  animation: cutiOuterRunActiveMove 8.5s linear infinite !important;
+}
+
+#cutiPanel table.cuti-table{
+  position: relative !important;
+  z-index: 2 !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+  background: rgba(7,7,9,.94) !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+#cutiPanel .cuti-table th,
+#cutiPanel .cuti-table td,
+#cutiPanel .cuti-table tr{
+  background-image: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+#cutiPanel .cuti-table tbody td{
+  background: rgba(9,9,11,.92) !important;
+}
+
+#cutiPanel .cuti-table tbody tr:hover td{
+  background: rgba(39,39,43,.92) !important;
+}
+
+@keyframes cutiOuterRunActiveMove{
+  to { --cutiOuterRunActive: 360deg; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  #cutiPanel .cuti-table-wrap{ animation: none !important; }
+}
+</style>
+
+<style id="jarvis-final-staff-mawaroto-lampu-sama-cuti">
+/* ===== FINAL JARVIS: LAMPU GARIS BERJALAN STAFF MAWAROTO SAMA SEPERTI CUTI ===== */
+@property --staffOuterRunActive {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+/* Matikan efek lampu/kilau di bagian dalam STAFF MAWAROTO supaya nama tetap jelas */
+#csPanel .cs-wrap::before,
+#csPanel .cs-wrap::after,
+#csPanel .cs-table::before,
+#csPanel .cs-table::after,
+#csPanel .cs-table thead::before,
+#csPanel .cs-table thead::after,
+#csPanel .cs-table tbody::before,
+#csPanel .cs-table tbody::after,
+#csPanel .cs-table tr::before,
+#csPanel .cs-table tr::after,
+#csPanel .cs-table th::before,
+#csPanel .cs-table th::after,
+#csPanel .cs-table td::before,
+#csPanel .cs-table td::after{
+  content: none !important;
+  display: none !important;
+  opacity: 0 !important;
+  background: none !important;
+  background-image: none !important;
+  animation: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+/* Lampu berjalan hanya di garis luar kotak STAFF MAWAROTO */
+#csPanel .cs-wrap{
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: auto !important;
+  border: 5px solid transparent !important;
+  border-radius: 20px !important;
+  padding: 6px !important;
+  background:
+    linear-gradient(rgba(8,8,10,.96), rgba(8,8,10,.96)) padding-box,
+    conic-gradient(
+      from var(--staffOuterRunActive),
+      #1b1b1f 0deg,
+      #1b1b1f 22deg,
+      #0f172a 36deg,
+      #1e40af 52deg,
+      #38bdf8 66deg,
+      #dbeafe 76deg,
+      #7f1020 88deg,
+      #dc2626 104deg,
+      #ffd1d1 116deg,
+      #1b1b1f 132deg,
+      #1b1b1f 198deg,
+      #390814 216deg,
+      #b91c1c 232deg,
+      #ffb4b4 246deg,
+      #2563eb 262deg,
+      #60a5fa 278deg,
+      #0b1638 296deg,
+      #1b1b1f 318deg,
+      #1b1b1f 360deg
+    ) border-box !important;
+  box-shadow:
+    0 0 10px rgba(220,38,38,.50),
+    0 0 15px rgba(37,99,235,.42),
+    0 0 24px rgba(0,0,0,.65),
+    inset 0 0 0 1px rgba(255,255,255,.05) !important;
+  animation: staffOuterRunActiveMove 8.5s linear infinite !important;
+}
+
+#csPanel table.cs-table{
+  position: relative !important;
+  z-index: 2 !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+  background: rgba(7,7,9,.94) !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+#csPanel .cs-table th,
+#csPanel .cs-table td,
+#csPanel .cs-table tr{
+  background-image: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+#csPanel .cs-table tbody td{
+  background: rgba(9,9,11,.92) !important;
+}
+
+#csPanel .cs-table tbody tr:hover td{
+  background: rgba(39,39,43,.92) !important;
+}
+
+@keyframes staffOuterRunActiveMove{
+  to { --staffOuterRunActive: 360deg; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  #csPanel .cs-wrap{ animation: none !important; }
 }
 </style>
